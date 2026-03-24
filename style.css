@@ -26,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 40%),
                       radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
@@ -39,7 +39,7 @@ body {
 .app-container {
     width: 100%;
     max-width: 600px;
-    height: 100vh;
+    height: 100dvh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -468,7 +468,7 @@ textarea:focus, input[type="text"]:focus {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: #000;
     z-index: 1000;
     display: flex;

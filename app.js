@@ -329,7 +329,7 @@ async function sendMessage() {
         
     } catch (e) {
         console.error("Error sending message: ", e);
-        alert("Failed to send message.");
+        alert("Failed to send message. Reason: " + e.message);
     }
 }
 
