@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureChat - One Time View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app" class="app-container glass-overlay">
+        
+        <!-- Setup Firebase Screen -->
+        <div id="setup-screen" class="screen full-center active glass-panel">
+            <div class="card">
+                <h2><i class="fa-solid fa-fire"></i> Firebase Setup</h2>
+                <p>Enter your Firebase Config to start. Make sure Firestore and Storage are enabled.</p>
+                <textarea id="firebase-config-input" placeholder='{
+  "apiKey": "...",
+  "authDomain": "...",
+  "projectId": "...",
+  "storageBucket": "...",
+  "messagingSenderId": "...",
+  "appId": "..."
+}'></textarea>
+                <button id="save-config-btn" class="btn primary-btn w-100">Save & Continue</button>
+            </div>
+        </div>
+
+        <!-- Join/Create Room Screen -->
+        <div id="home-screen" class="screen full-center hidden glass-panel">
+            <div class="card fade-in">
+                <h2><i class="fa-solid fa-messages"></i> SecureChat</h2>
+                <p>Create a new secure chat or join an existing one.</p>
+                
+                <div class="action-box">
+                    <button id="create-room-btn" class="btn primary-btn w-100"><i class="fa-solid fa-plus"></i> Create New Chat</button>
+                    <div class="divider"><span>OR</span></div>
+                    <div class="input-group">
+                        <input type="text" id="join-room-id" placeholder="Enter Chat ID (e.g. 123456)">
+                        <button id="join-room-btn" class="btn secondary-btn"><i class="fa-solid fa-arrow-right"></i> Join</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Screen -->
+        <div id="chat-screen" class="screen hidden">
+            <header class="chat-header glass-panel">
+                <div class="header-left">
+                    <button id="leave-room-btn" class="icon-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="room-info">
+                        <h3>Chat ID: <span id="current-room-id"></span></h3>
+                        <span class="status">Real-time Encrypted</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="copy-id-btn" class="icon-btn" title="Copy Chat ID"><i class="fa-solid fa-copy"></i></button>
+                </div>
+            </header>
+
+            <main id="chat-messages" class="chat-area">
+                <!-- Messages render here -->
+                <div class="system-message fade-in">
+                    <span>Welcome to the chat! Messages are end-to-end secure.</span>
+                </div>
+            </main>
+
+            <!-- Media Preview (Before Sending) -->
+            <div id="media-preview-container" class="hidden glass-panel">
+                <div class="preview-header">
+                    <span>Selected Media</span>
+                    <button id="close-preview-btn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="preview-content">
+                    <img id="preview-image" class="hidden">
+                    <video id="preview-video" class="hidden" controls></video>
+                </div>
+            </div>
+
+            <footer class="chat-footer glass-panel">
+                <div class="message-input-wrapper">
+                    <button id="attach-btn" class="icon-btn attach-btn" title="Attach Photo/Video">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <input type="file" id="media-input" class="hidden" accept="image/*,video/*">
+                    
+                    <button id="view-once-toggle" class="icon-btn view-once-toggle" title="Toggle View Once">
+                        <i class="fa-solid fa-eye-slash"></i>
+                        <span class="tooltip">View Once: Off</span>
+                    </button>
+
+                    <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                    
+                    <button id="send-btn" class="icon-btn send-btn primary-circle">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Fullscreen Media Viewer (View Once or Normal) -->
+        <div id="fullscreen-viewer" class="fullscreen-overlay hidden">
+            <div class="viewer-header">
+                <div class="viewer-timer hidden" id="viewer-timer">
+                    <i class="fa-solid fa-stopwatch"></i> <span id="time-left"></span>
+                </div>
+                <button id="close-viewer-btn" class="icon-btn close-viewer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="viewer-content">
+                <img id="viewer-image" class="hidden">
+                <video id="viewer-video" class="hidden" controls autoplay></video>
+            </div>
+            <div class="viewer-footer">
+                <span id="view-once-warning" class="hidden"><i class="fa-solid fa-shield"></i> This view-once media will be closed permanently.</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
