@@ -281,8 +281,19 @@ function showMediaPreview(file) {
 
 // Sending Logic
 sendBtn.addEventListener('click', sendMessage);
-messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendMessage();
+messageInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+});
+
+messageInput.addEventListener('keydown', (e) => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches || /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    if (e.key === 'Enter' && !e.shiftKey) {
+        if (!isMobile) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
 });
 
 async function sendMessage() {
@@ -295,6 +306,7 @@ async function sendMessage() {
     }
 
     messageInput.value = '';
+    messageInput.style.height = 'auto';
     const currentMedia = mediaFile;
     const currentViewOnce = viewOnceEnabled;
     closePreviewBtn.click(); // Reset preview UI
